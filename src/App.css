@@ -1,3 +1,53 @@
 .App {
   text-align: center;
 }
+
+.articles-page {
+  list-style-type: none;
+  padding: 0;
+}
+
+.article {
+  color: #2f4858;
+  background-color: #f7f3e3;
+  margin: 20px 0;
+  border: 1px solid black;
+}
+
+.article-image {
+  width: 150px;
+  height: 150px;
+}
+
+@media only screen and (min-width: 600px) {
+  .articles-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .article {
+    width: 200px;
+    height: 400px;
+    padding: 30px;
+  }
+
+  .article-image {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media only screen and (min-width: 650px) {
+  .articles-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .article {
+    height: 20rem;
+    width: 15rem;
+    padding: 5rem;
+  }
+}
