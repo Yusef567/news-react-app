@@ -13,9 +13,5 @@ export const getAllArticles = (page) => {
     })
     .then(({ data }) => {
       return data.articles;
-    })
-    .catch((error) => {
-      console.log(error, "<----- error");
-      return error;
     });
 };

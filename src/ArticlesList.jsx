@@ -6,18 +6,25 @@ export const ArticlesList = () => {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setcurrentPage] = useState(1);
+  const [isInvalid, setIsInvalid] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
-    getAllArticles(currentPage).then((responseArticles) => {
-      if (!responseArticles.length) {
-        console.log(responseArticles);
-        setcurrentPage(1);
-      } else {
-        setArticles(responseArticles);
-        setIsLoading(false);
-      }
-    });
+    getAllArticles(currentPage)
+      .then((responseArticles) => {
+        if (!responseArticles.length) {
+          setcurrentPage(1);
+          setIsLoading(false);
+        } else {
+          setArticles(responseArticles);
+          setIsLoading(false);
+        }
+      })
+      .catch((error) => {
+        setIsInvalid(true);
+        setError(error.response);
+      });
   }, [currentPage]);
 
   const fetchPreviousPage = () => {
@@ -27,7 +34,9 @@ export const ArticlesList = () => {
     setcurrentPage(currentPage + 1);
   };
 
-  return isLoading ? (
+  return isInvalid ? (
+    <h2>{`Error:${error.status} ${error.data.msg}`}</h2>
+  ) : isLoading ? (
     <h2>Loading Articles Please Wait...</h2>
   ) : (
     <main>
@@ -44,7 +53,11 @@ export const ArticlesList = () => {
               />
               <p>Author: {article.author}</p>
               <p>Topic: {article.topic}</p>
-              <button onClick={<Link to={`:${article.article_id}`}></Link>}>
+              <button
+                onClick={() => {
+                  <Link to={`:${article.article_id}`}></Link>;
+                }}
+              >
                 View Article
               </button>
             </li>
