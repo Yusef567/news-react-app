@@ -21,3 +21,15 @@ export const getArticle = (article_id) => {
     return data.article;
   });
 };
+
+export const getComments = (article_id, page) => {
+  return myApi
+    .get(`/articles/${article_id}/comments`, {
+      params: {
+        page,
+      },
+    })
+    .then(({ data }) => {
+      return data.comments;
+    });
+};
