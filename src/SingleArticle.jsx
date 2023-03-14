@@ -64,17 +64,17 @@ export const SingleArticle = () => {
               <p>{article.body}</p>
               <button>Votes: {article.votes}</button>
               <p>Release Date: {article.created_at}</p>
+
+              <button onClick={downVote}>
+                <span aria-label="down vote article">down vote: 👎</span>
+              </button>
+              <button onClick={upVote}>
+                <span aria-label="up vote article">up vote: 👍</span>
+              </button>
               {error ? (
                 <h3>{`Error:${error.status} ${error.data.msg}`}</h3>
               ) : (
-                <div>
-                  <button onClick={downVote}>
-                    <span aria-label="down vote article">down vote: 👎</span>
-                  </button>
-                  <button onClick={upVote}>
-                    <span aria-label="up vote article">up vote: 👍</span>
-                  </button>
-                </div>
+                <p></p>
               )}
             </li>
           </ul>
