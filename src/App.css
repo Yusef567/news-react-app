@@ -55,6 +55,14 @@
   font-weight: bolder;
   font-size: medium;
 }
+.comments-page {
+  list-style-type: none;
+  padding: 0;
+}
+.comment {
+  margin: 2rem;
+  border: 2px solid black;
+}
 @media only screen and (min-width: 600px) {
   .articles-page {
     display: flex;
