@@ -53,13 +53,7 @@ export const ArticlesList = () => {
               />
               <p>Author: {article.author}</p>
               <p>Topic: {article.topic}</p>
-              <button
-                onClick={() => {
-                  <Link to={`:${article.article_id}`}></Link>;
-                }}
-              >
-                View Article
-              </button>
+              <Link to={`/articles/${article.article_id}`}> View Article</Link>
             </li>
           );
         })}
