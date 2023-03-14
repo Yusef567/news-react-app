@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getArticle } from "./api";
+import { getArticle, patchArticle } from "./api";
 import { Comments } from "./Comments";
 export const SingleArticle = () => {
   const [article, setArticle] = useState(null);
   const { article_id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -15,8 +16,37 @@ export const SingleArticle = () => {
     });
   }, [article_id]);
 
+  const upVote = () => {
+    setArticle((currentArticle) => {
+      return { ...currentArticle, votes: currentArticle.votes + 1 };
+    });
+    const updatedVotes = {
+      inc_votes: 1,
+    };
+    patchArticle(article_id, updatedVotes).catch((error) => {
+      setError(error.response);
+      setArticle((currentArticle) => {
+        return { ...currentArticle, votes: currentArticle.votes - 1 };
+      });
+    });
+  };
+
+  const downVote = () => {
+    setArticle((currentArticle) => {
+      return { ...currentArticle, votes: currentArticle.votes - 1 };
+    });
+    const updatedVotes = {
+      inc_votes: -1,
+    };
+    patchArticle(article_id, updatedVotes).catch((error) => {
+      setError(error.response);
+      setArticle((currentArticle) => {
+        return { ...currentArticle, votes: currentArticle.votes + 1 };
+      });
+    });
+  };
   if (isLoading) {
-    return <h2>Loading Articles Please Wait...</h2>;
+    return <h2>Loading Article Please Wait...</h2>;
   } else {
     return (
       <main>
@@ -32,8 +62,20 @@ export const SingleArticle = () => {
               <p>Author: {article.author}</p>
               <p>Topic: {article.topic}</p>
               <p>{article.body}</p>
-              <p>Votes: {article.votes}</p>
+              <button>Votes: {article.votes}</button>
               <p>Release Date: {article.created_at}</p>
+
+              <button onClick={downVote}>
+                <span aria-label="down vote article">down vote: 👎</span>
+              </button>
+              <button onClick={upVote}>
+                <span aria-label="up vote article">up vote: 👍</span>
+              </button>
+              {error ? (
+                <h3>{`Error:${error.status} ${error.data.msg}`}</h3>
+              ) : (
+                <p></p>
+              )}
             </li>
           </ul>
         </section>

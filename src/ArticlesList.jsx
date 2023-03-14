@@ -53,7 +53,8 @@ export const ArticlesList = () => {
               />
               <p>Author: {article.author}</p>
               <p>Topic: {article.topic}</p>
-              <Link to={`/articles/${article.article_id}`}> View Article</Link>
+
+              <Link to={`/articles/${article.article_id}`}>View Article</Link>
             </li>
           );
         })}
