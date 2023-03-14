@@ -33,3 +33,11 @@ export const getComments = (article_id, page) => {
       return data.comments;
     });
 };
+
+export const patchArticle = (article_id, updatedVotes) => {
+  return myApi
+    .patch(`/articles/${article_id}`, updatedVotes)
+    .then(({ data }) => {
+      return data;
+    });
+};

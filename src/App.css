@@ -12,6 +12,7 @@
   background-color: #f7f3e3;
   margin: 20px 0;
   border: 1px solid black;
+  overflow: scroll;
 }
 
 .article-image {
