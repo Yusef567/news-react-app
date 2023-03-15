@@ -10,27 +10,16 @@ export const AddComment = ({ article_id, setComments }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setNewComment("");
-    const userCommnet = {
-      username: user.username,
-      body: newComment,
-      votes: 0,
-    };
-    setComments((currentComments) => {
-      return [userCommnet, ...currentComments];
-    });
-    postComment(article_id, newComment, user.username).catch((error) => {
-      setComments((currentComments) => {
-        const correctComments = currentComments.filter((comment) => {
-          if (comment !== userCommnet) {
-            return { ...comment };
-          } else {
-            return false;
-          }
+    postComment(article_id, newComment, user.username)
+      .then((commentObj) => {
+        setComments((currentComments) => {
+          return [commentObj, ...currentComments];
         });
-        setComments(correctComments);
+      })
+      .catch((error) => {
+        console.log(error);
         setError(error.response);
       });
-    });
   };
   return (
     <form className="add-comment" onSubmit={handleSubmit}>
