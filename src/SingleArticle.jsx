@@ -7,6 +7,7 @@ export const SingleArticle = () => {
   const { article_id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [userVote, setUserVote] = useState(0);
 
   useEffect(() => {
     setIsLoading(true);
@@ -17,13 +18,17 @@ export const SingleArticle = () => {
   }, [article_id]);
 
   const upVote = () => {
+    setUserVote(1);
+
     setArticle((currentArticle) => {
       return { ...currentArticle, votes: currentArticle.votes + 1 };
     });
+
     const updatedVotes = {
       inc_votes: 1,
     };
     patchArticle(article_id, updatedVotes).catch((error) => {
+      setUserVote(0);
       setError(error.response);
       setArticle((currentArticle) => {
         return { ...currentArticle, votes: currentArticle.votes - 1 };
@@ -32,13 +37,18 @@ export const SingleArticle = () => {
   };
 
   const downVote = () => {
+    setUserVote(-1);
+
     setArticle((currentArticle) => {
       return { ...currentArticle, votes: currentArticle.votes - 1 };
     });
+
     const updatedVotes = {
       inc_votes: -1,
     };
     patchArticle(article_id, updatedVotes).catch((error) => {
+      setUserVote(0);
+
       setError(error.response);
       setArticle((currentArticle) => {
         return { ...currentArticle, votes: currentArticle.votes + 1 };
@@ -65,14 +75,14 @@ export const SingleArticle = () => {
               <button>Votes: {article.votes}</button>
               <p>Release Date: {article.created_at}</p>
 
-              <button onClick={downVote}>
+              <button onClick={downVote} disabled={userVote !== 0}>
                 <span aria-label="down vote article">down vote: 👎</span>
               </button>
-              <button onClick={upVote}>
+              <button onClick={upVote} disabled={userVote !== 0}>
                 <span aria-label="up vote article">up vote: 👍</span>
               </button>
               {error ? (
-                <h3>{`Error:${error.status} ${error.data.msg}`}</h3>
+                <h3>{`Error:${error.status} ${error.data.msg} vote unsuccessful`}</h3>
               ) : (
                 <p></p>
               )}

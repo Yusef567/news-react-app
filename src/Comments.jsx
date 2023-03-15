@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { AddComment } from "./AddComment";
 import { getComments } from "./api";
 
 export const Comments = ({ article_id }) => {
@@ -41,6 +42,7 @@ export const Comments = ({ article_id }) => {
     return (
       <>
         <h3>Comments</h3>
+        <AddComment article_id={article_id} setComments={setComments} />
         <ul className="comments-page">
           {comments.map((comment) => {
             return (

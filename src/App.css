@@ -64,6 +64,28 @@
   margin: 2rem;
   border: 2px solid black;
 }
+.users-page {
+  list-style-type: none;
+  padding: 0;
+}
+
+.user-image {
+  width: 150px;
+  height: 150px;
+}
+
+.user {
+  margin: 2rem;
+  border: 2px solid black;
+}
+
+.comment-box {
+  font-size: 1.3rem;
+  width: 95%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
 @media only screen and (min-width: 600px) {
   .articles-page {
     display: flex;
@@ -85,6 +107,23 @@
     width: 500px;
     height: 350px;
   }
+
+  .users-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .user {
+    width: 200px;
+    height: 400px;
+    padding: 30px;
+  }
+
+  .user-image {
+    width: 250px;
+    height: 200px;
+  }
 }
 
 @media only screen and (min-width: 650px) {
@@ -102,5 +141,21 @@
   .single-article-image {
     width: 500px;
     height: 350px;
+  }
+  .users-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .user {
+    height: 20rem;
+    width: 15rem;
+    padding: 5rem;
+  }
+
+  .user-image {
+    width: 250px;
+    height: 200px;
   }
 }
