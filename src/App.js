@@ -4,8 +4,12 @@ import { Articles } from "./Articles";
 import { Header } from "./Header";
 import { Navbar } from "./Navbar";
 import { Home } from "./Home";
+import { UsersList } from "./UsersList";
+import { UserContext } from "./contexts/user";
+import { useContext } from "react";
 
 function App() {
+  const userValue = useContext(UserContext);
   return (
     <div className="App">
       <Header />
@@ -13,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/articles/*" element={<Articles />} />
+        <Route path="/users" element={<UsersList />} />
       </Routes>
     </div>
   );
