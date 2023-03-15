@@ -10,7 +10,7 @@ export const AddComment = ({ article_id, setComments }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setNewComment("");
-    postComment("hi", newComment, user.username)
+    postComment(article_id, newComment, user.username)
       .then((commentObj) => {
         setComments((currentComments) => {
           return [commentObj, ...currentComments];
