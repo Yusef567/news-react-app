@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getAllArticles } from "./api";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 export const ArticlesList = () => {
   const [articles, setArticles] = useState([]);
@@ -9,9 +9,11 @@ export const ArticlesList = () => {
   const [isInvalid, setIsInvalid] = useState(false);
   const [error, setError] = useState(null);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const topicFilter = searchParams.get("topic");
   useEffect(() => {
     setIsLoading(true);
-    getAllArticles(currentPage)
+    getAllArticles(currentPage, { topic: topicFilter })
       .then((responseArticles) => {
         if (!responseArticles.length) {
           setcurrentPage(1);
@@ -25,7 +27,7 @@ export const ArticlesList = () => {
         setIsInvalid(true);
         setError(error.response);
       });
-  }, [currentPage]);
+  }, [currentPage, searchParams]);
 
   const fetchPreviousPage = () => {
     setcurrentPage(currentPage - 1);

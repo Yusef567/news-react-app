@@ -7,6 +7,7 @@ import { Home } from "./Home";
 import { UsersList } from "./UsersList";
 import { UserContext } from "./contexts/user";
 import { useContext } from "react";
+import { TopicsList } from "./TopicsList";
 
 function App() {
   const userValue = useContext(UserContext);
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/articles/*" element={<Articles />} />
         <Route path="/users" element={<UsersList />} />
+        <Route path="/topics" element={<TopicsList />} />
       </Routes>
     </div>
   );
