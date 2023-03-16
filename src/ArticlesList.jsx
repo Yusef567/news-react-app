@@ -9,11 +9,34 @@ export const ArticlesList = () => {
   const [isInvalid, setIsInvalid] = useState(false);
   const [error, setError] = useState(null);
 
+  const [selectedSortBy, setSelectedSortBy] = useState("");
+  const [selectedOrderBy, setSelectedOrderBy] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const topicFilter = searchParams.get("topic");
+  const sortByQuery = searchParams.get("sort_by");
+  const orderByQuery = searchParams.get("order");
+
+  // console.log();
+
+  const setOrder = (direction) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("order", direction);
+    setSearchParams(newParams);
+  };
+
+  const setSort = (column) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("sort_by", column);
+    setSearchParams(newParams);
+  };
+
   useEffect(() => {
     setIsLoading(true);
-    getAllArticles(currentPage, { topic: topicFilter })
+    getAllArticles(currentPage, {
+      topic: topicFilter,
+      sort_by: sortByQuery,
+      order: orderByQuery,
+    })
       .then((responseArticles) => {
         if (!responseArticles.length) {
           setcurrentPage(1);
@@ -27,7 +50,7 @@ export const ArticlesList = () => {
         setIsInvalid(true);
         setError(error.response);
       });
-  }, [currentPage, searchParams]);
+  }, [currentPage, sortByQuery, orderByQuery, topicFilter]);
 
   const fetchPreviousPage = () => {
     setcurrentPage(currentPage - 1);
@@ -43,6 +66,36 @@ export const ArticlesList = () => {
   ) : (
     <main>
       <h2>Articles</h2>
+      <label>Sort by: </label>
+      <select
+        value={selectedSortBy}
+        onChange={(event) => {
+          setSelectedSortBy(event.target.value);
+          setSort(event.target.value);
+        }}
+      >
+        <option value="" disabled>
+          Select a sort by
+        </option>
+        <option value="created_at">Release Date</option>
+        <option value="comment_count">Comment count</option>
+        <option value="votes">Votes</option>
+      </select>
+
+      <label>Order by: </label>
+      <select
+        value={selectedOrderBy}
+        onChange={(event) => {
+          setSelectedOrderBy(event.target.value);
+          setOrder(event.target.value);
+        }}
+      >
+        <option value="" disabled>
+          Select a order by
+        </option>
+        <option value="asc">asc</option>
+        <option value="desc">desc</option>
+      </select>
       <ul className="articles-page">
         {articles.map((article) => {
           return (
@@ -55,7 +108,8 @@ export const ArticlesList = () => {
               />
               <p>Author: {article.author}</p>
               <p>Topic: {article.topic}</p>
-
+              <p>Comments: {article.comment_count}</p>
+              <p>Votes: {article.votes}</p>
               <Link to={`/articles/${article.article_id}`}>View Article</Link>
             </li>
           );
