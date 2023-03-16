@@ -13,6 +13,9 @@ export const Navbar = () => {
         <Link to="/users">
           <button className="nav-button">Log in</button>
         </Link>
+        <Link to="/topics">
+          <button className="nav-button">Topics</button>
+        </Link>
       </nav>
     </div>
   );

@@ -4,11 +4,12 @@ const myApi = axios.create({
   baseURL: "https://backend-project-5gjj.onrender.com/api",
 });
 
-export const getAllArticles = (page) => {
+export const getAllArticles = (page, options = {}) => {
   return myApi
     .get("/articles", {
       params: {
         page,
+        ...options,
       },
     })
     .then(({ data }) => {
@@ -53,5 +54,11 @@ export const postComment = (article_id, body, username) => {
 export const getUsers = () => {
   return myApi.get("/users").then(({ data }) => {
     return data.users;
+  });
+};
+
+export const getTopics = () => {
+  return myApi.get("/topics").then(({ data }) => {
+    return data.topics;
   });
 };
