@@ -72,7 +72,7 @@ export const SingleArticle = () => {
               <p>Author: {article.author}</p>
               <p>Topic: {article.topic}</p>
               <p>{article.body}</p>
-              <button>Votes: {article.votes}</button>
+              <p>Votes: {article.votes}</p>
               <p>Release Date: {new Date(article.created_at).toDateString()}</p>
 
               <button onClick={downVote} disabled={userVote !== 0}>
