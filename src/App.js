@@ -10,7 +10,7 @@ import { useContext } from "react";
 import { TopicsList } from "./TopicsList";
 
 function App() {
-  const userValue = useContext(UserContext);
+  useContext(UserContext);
   return (
     <div className="App">
       <Header />

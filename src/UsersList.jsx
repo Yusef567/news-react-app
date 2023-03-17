@@ -3,7 +3,7 @@ import { getUsers } from "./api";
 import { UserContext } from "./contexts/user";
 
 export const UsersList = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
