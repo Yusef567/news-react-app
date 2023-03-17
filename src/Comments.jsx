@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { AddComment } from "./AddComment";
-import { getComments } from "./api";
+import { deleteComment, getComments } from "./api";
+import { useContext } from "react";
+import { UserContext } from "./contexts/user";
 
 export const Comments = ({ article_id }) => {
   const [comments, setComments] = useState([]);
@@ -8,6 +10,8 @@ export const Comments = ({ article_id }) => {
   const [currentPage, setcurrentPage] = useState(1);
   const [isInvalid, setIsInvalid] = useState(false);
   const [error, setError] = useState(null);
+  const [deleteError, setDeleteError] = useState(null);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     setIsLoading(true);
@@ -34,6 +38,23 @@ export const Comments = ({ article_id }) => {
     setcurrentPage(currentPage + 1);
   };
 
+  const removeComment = (commentToDelete) => {
+    setComments((currentComments) => {
+      return currentComments.filter(
+        (comment) => comment.comment_id !== commentToDelete.comment_id
+      );
+    });
+
+    deleteComment(commentToDelete.comment_id).catch((err) => {
+      setComments((currentComments) => {
+        console.log(err, "error");
+
+        setDeleteError(error.message);
+        return [commentToDelete, ...currentComments];
+      });
+    });
+  };
+
   if (isLoading) {
     return <h3>Loading comments...</h3>;
   } else if (isInvalid) {
@@ -49,8 +70,25 @@ export const Comments = ({ article_id }) => {
               <li className="comment" key={comment.comment_id}>
                 <p>Comment: {comment.body}</p>
                 <p>User: {comment.author}</p>
-                <p>Posted: {comment.created_at}</p>
+                <p>Posted: {new Date(comment.created_at).toDateString()}</p>
                 <p>Votes: {comment.votes}</p>
+                {deleteError ? (
+                  <p>something went wrong {deleteError}</p>
+                ) : (
+                  <p></p>
+                )}
+                {user.username === comment.author ? (
+                  <button onClick={() => removeComment(comment)}>
+                    Delete comment
+                  </button>
+                ) : (
+                  <p></p>
+                )}
+                {deleteError ? (
+                  <p>something went wrong {deleteError}</p>
+                ) : (
+                  <p></p>
+                )}
               </li>
             );
           })}

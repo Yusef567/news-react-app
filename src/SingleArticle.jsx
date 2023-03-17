@@ -73,7 +73,7 @@ export const SingleArticle = () => {
               <p>Topic: {article.topic}</p>
               <p>{article.body}</p>
               <button>Votes: {article.votes}</button>
-              <p>Release Date: {article.created_at}</p>
+              <p>Release Date: {new Date(article.created_at).toDateString()}</p>
 
               <button onClick={downVote} disabled={userVote !== 0}>
                 <span aria-label="down vote article">down vote: 👎</span>

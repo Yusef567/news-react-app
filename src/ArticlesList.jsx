@@ -16,8 +16,6 @@ export const ArticlesList = () => {
   const sortByQuery = searchParams.get("sort_by");
   const orderByQuery = searchParams.get("order");
 
-  // console.log();
-
   const setOrder = (direction) => {
     const newParams = new URLSearchParams(searchParams);
     newParams.set("order", direction);
