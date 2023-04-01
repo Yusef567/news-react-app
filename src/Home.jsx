@@ -37,7 +37,12 @@ export const Home = () => {
                 />
                 <p>Author: {article.author}</p>
                 <p>Topic: {article.topic}</p>
-                <Link to={`/articles/${article.article_id}`}>View Article</Link>
+                <Link
+                  className="article-link"
+                  to={`/articles/${article.article_id}`}
+                >
+                  View Article
+                </Link>
               </li>
             );
           })}

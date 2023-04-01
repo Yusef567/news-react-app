@@ -78,7 +78,10 @@ export const Comments = ({ article_id }) => {
                   <p></p>
                 )}
                 {user.username === comment.author ? (
-                  <button onClick={() => removeComment(comment)}>
+                  <button
+                    className="delete-button"
+                    onClick={() => removeComment(comment)}
+                  >
                     Delete comment
                   </button>
                 ) : (
@@ -92,8 +95,17 @@ export const Comments = ({ article_id }) => {
               </li>
             );
           })}
-          <button onClick={fetchPreviousComments}>Previous Page</button>
-          <button onClick={fetchNextComments}>Next Page</button>
+          {currentPage > 1 ? (
+            <button className="previous-button" onClick={fetchPreviousComments}>
+              Previous Page
+            </button>
+          ) : (
+            <p></p>
+          )}
+
+          <button className="next-button" onClick={fetchNextComments}>
+            Next Page
+          </button>
         </ul>
       </>
     );

@@ -28,11 +28,12 @@ export const AddComment = ({ article_id, setComments }) => {
         <textarea
           id="newComment"
           className="comment-box"
+          placeholder="Type your comment here..."
           value={newComment}
           onChange={(event) => setNewComment(event.target.value)}
           required
         ></textarea>
-        <button>Post Comment</button>
+        <button className="post-button">Post Comment</button>
       </label>
       {error ? (
         <h3>{`Error:${error.status} ${error.data.msg} comment unsuccessful`}</h3>

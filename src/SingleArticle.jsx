@@ -75,11 +75,19 @@ export const SingleArticle = () => {
               <p>Votes: {article.votes}</p>
               <p>Release Date: {new Date(article.created_at).toDateString()}</p>
 
-              <button onClick={downVote} disabled={userVote !== 0}>
-                <span aria-label="down vote article">down vote: 👎</span>
+              <button
+                className="vote-button"
+                onClick={downVote}
+                disabled={userVote !== 0}
+              >
+                <span aria-label="down vote article">Down Vote: 👎</span>
               </button>
-              <button onClick={upVote} disabled={userVote !== 0}>
-                <span aria-label="up vote article">up vote: 👍</span>
+              <button
+                className="vote-button"
+                onClick={upVote}
+                disabled={userVote !== 0}
+              >
+                <span aria-label="up vote article">Up Vote: 👍</span>
               </button>
               {error ? (
                 <h3>{`Error:${error.status} ${error.data.msg} vote unsuccessful`}</h3>

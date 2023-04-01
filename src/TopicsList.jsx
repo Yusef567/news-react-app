@@ -26,7 +26,10 @@ export const TopicsList = () => {
               <li className="topic" key={topic.slug}>
                 <p>Topic: {topic.slug}</p>
                 <p>Description: {topic.description}</p>
-                <Link to={`/articles?topic=${topic.slug}`}>
+                <Link
+                  className="article-link"
+                  to={`/articles?topic=${topic.slug}`}
+                >
                   View {topic.slug} articles
                 </Link>
               </li>

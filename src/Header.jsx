@@ -5,7 +5,7 @@ export const Header = () => {
   const { user } = useContext(UserContext);
 
   return (
-    <header className="Header">
+    <header className="header">
       <h1>NewsWave</h1>
       <h2>Logged in as {user.username}</h2>
     </header>

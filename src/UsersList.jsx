@@ -31,6 +31,7 @@ export const UsersList = () => {
                 ></img>
                 <p>username: {user.username}</p>
                 <button
+                  className="logIn-button"
                   onClick={() => {
                     setUser(user);
                   }}

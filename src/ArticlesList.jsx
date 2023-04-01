@@ -64,8 +64,9 @@ export const ArticlesList = () => {
   ) : (
     <main>
       <h2>Articles</h2>
-      <label>Sort by: </label>
+      <label className="select-msg">Sort by: </label>
       <select
+        className="filter-button"
         value={selectedSortBy}
         onChange={(event) => {
           setSelectedSortBy(event.target.value);
@@ -80,8 +81,9 @@ export const ArticlesList = () => {
         <option value="votes">Votes</option>
       </select>
 
-      <label>Order by: </label>
+      <label className="select-msg">Order by: </label>
       <select
+        className="filter-button"
         value={selectedOrderBy}
         onChange={(event) => {
           setSelectedOrderBy(event.target.value);
@@ -89,7 +91,7 @@ export const ArticlesList = () => {
         }}
       >
         <option value="" disabled>
-          Select a order by
+          Select an order by
         </option>
         <option value="asc">asc</option>
         <option value="desc">desc</option>
@@ -108,13 +110,27 @@ export const ArticlesList = () => {
               <p>Topic: {article.topic}</p>
               <p>Comments: {article.comment_count}</p>
               <p>Votes: {article.votes}</p>
-              <Link to={`/articles/${article.article_id}`}>View Article</Link>
+              <Link
+                className="article-link"
+                to={`/articles/${article.article_id}`}
+              >
+                View Article
+              </Link>
             </li>
           );
         })}
       </ul>
-      <button onClick={fetchPreviousPage}>Previous Page</button>
-      <button onClick={fetchNextPage}>Next Page</button>
+      {currentPage > 1 ? (
+        <button className="previous-button" onClick={fetchPreviousPage}>
+          Previous Page
+        </button>
+      ) : (
+        <p></p>
+      )}
+
+      <button className="next-button" onClick={fetchNextPage}>
+        Next Page
+      </button>
     </main>
   );
 };
