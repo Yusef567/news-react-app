@@ -1,30 +1,44 @@
 import { useState, useEffect } from "react";
-import { getAllArticles } from "./api";
+import { getAllArticles } from "../api";
 import { Link } from "react-router-dom";
 
 export const Home = () => {
   const [sampleArticles, setSampleArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
-    getAllArticles(1).then((responseArticles) => {
-      setIsLoading(true);
-      setSampleArticles(responseArticles);
-      setIsLoading(false);
-    });
+    getAllArticles(1)
+      .then((responseArticles) => {
+        setIsLoading(true);
+        setSampleArticles(responseArticles);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setError(err.response);
+      });
   }, []);
 
   if (isLoading) {
-    return <h2>Loading Home Page...</h2>;
+    return (
+      <>
+        <h2>Loading Home page please Wait....</h2>
+        <div className="loading"></div>
+      </>
+    );
+  } else if (error) {
+    return <h2>{`Error:${error.status} ${error.data.msg}`}</h2>;
   } else {
     return (
       <main>
-        <h2>Welcome to NewsWave</h2>
+        <h2 className="welcome">Welcome to NewsWave</h2>
         <p className="intro">
-          Providing you with a dynamic and comprehensive range of News articles
-          and topics. NewsWave provides you with a platform that allows you to
-          engage with the articles you view through adding votes, posting
-          comments.
+          NewsWave provides users with a platform to engage with the articles
+          they view through posting or deleting comments and up or down voting
+          articles they view.
         </p>
+        <h3 className="top-articles">Browse latest articles below</h3>
         <ul className="articles-page">
           {sampleArticles.map((article) => {
             return (

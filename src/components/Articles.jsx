@@ -6,6 +6,7 @@ export const Articles = () => {
   return (
     <section className="articles">
       <Routes>
+        <Route path="/*" element={<h1>article not found</h1>} />
         <Route path="/" element={<ArticlesList />} />
         <Route path="/:article_id" element={<SingleArticle />} />
       </Routes>

@@ -10,9 +10,6 @@ export const Navbar = () => {
         <Link to="/articles">
           <button className="nav-button">Articles</button>
         </Link>
-        <Link to="/users">
-          <button className="nav-button">Log in</button>
-        </Link>
         <Link to="/topics">
           <button className="nav-button">Topics</button>
         </Link>

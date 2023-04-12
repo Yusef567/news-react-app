@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { AddComment } from "./AddComment";
-import { deleteComment, getComments } from "./api";
+import { deleteComment, getComments } from "../api";
 import { useContext } from "react";
-import { UserContext } from "./contexts/user";
+import { UserContext } from "../contexts/user";
 
 export const Comments = ({ article_id }) => {
   const [comments, setComments] = useState([]);
@@ -27,6 +27,7 @@ export const Comments = ({ article_id }) => {
       })
       .catch((error) => {
         setIsInvalid(true);
+        setIsLoading(false);
         setError(error.response);
       });
   }, [article_id, currentPage]);
@@ -56,18 +57,25 @@ export const Comments = ({ article_id }) => {
   };
 
   if (isLoading) {
-    return <h3>Loading comments...</h3>;
+    return (
+      <>
+        <h2>Loading Comments please wait...</h2>
+        <div className="loading"></div>
+      </>
+    );
   } else if (isInvalid) {
     return <h2>{`Error:${error.status} ${error.data.msg}`}</h2>;
   } else {
     return (
       <>
         <h3>Comments</h3>
+        {user.username ? null : <h4>Please Log in to post a comment</h4>}
         <AddComment article_id={article_id} setComments={setComments} />
         <ul className="comments-page">
           {comments.map((comment) => {
             return (
               <li className="comment" key={comment.comment_id}>
+                {console.log(comment, "<-----")}
                 <p>Comment: {comment.body}</p>
                 <p>User: {comment.author}</p>
                 <p>Posted: {new Date(comment.created_at).toDateString()}</p>

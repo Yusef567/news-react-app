@@ -13,13 +13,15 @@ export const getAllArticles = (page, options = {}) => {
       },
     })
     .then(({ data }) => {
-      return data.articles;
+      const { articles } = data;
+      return articles;
     });
 };
 
 export const getArticle = (article_id) => {
   return myApi.get(`/articles/${article_id}`).then(({ data }) => {
-    return data.article;
+    const { article } = data;
+    return article;
   });
 };
 
@@ -31,7 +33,8 @@ export const getComments = (article_id, page) => {
       },
     })
     .then(({ data }) => {
-      return data.comments;
+      const { comments } = data;
+      return comments;
     });
 };
 
@@ -47,19 +50,22 @@ export const postComment = (article_id, body, username) => {
   return myApi
     .post(`/articles/${article_id}/comments`, { username, body })
     .then(({ data }) => {
-      return data.comment;
+      const { comment } = data;
+      return comment;
     });
 };
 
 export const getUsers = () => {
   return myApi.get("/users").then(({ data }) => {
-    return data.users;
+    const { users } = data;
+    return users;
   });
 };
 
 export const getTopics = () => {
   return myApi.get("/topics").then(({ data }) => {
-    return data.topics;
+    const { topics } = data;
+    return topics;
   });
 };
 

@@ -1,13 +1,14 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { Articles } from "./Articles";
-import { Header } from "./Header";
-import { Navbar } from "./Navbar";
-import { Home } from "./Home";
-import { UsersList } from "./UsersList";
+import { Articles } from "./components/Articles";
+import { Header } from "./components/Header";
+import { Navbar } from "./components/Navbar";
+import { Home } from "./components/Home";
+import { UsersList } from "./components/UsersList";
 import { UserContext } from "./contexts/user";
 import { useContext } from "react";
-import { TopicsList } from "./TopicsList";
+import { TopicsList } from "./components/TopicsList";
+import { PageNotFound } from "./components/PageNotFound";
 
 function App() {
   useContext(UserContext);
@@ -20,6 +21,7 @@ function App() {
         <Route path="/articles/*" element={<Articles />} />
         <Route path="/users" element={<UsersList />} />
         <Route path="/topics" element={<TopicsList />} />
+        <Route path="/*" element={<PageNotFound />} />
       </Routes>
     </div>
   );

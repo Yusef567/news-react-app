@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAllArticles } from "./api";
+import { getAllArticles } from "../api";
 import { Link, useSearchParams } from "react-router-dom";
 
 export const ArticlesList = () => {
@@ -46,6 +46,7 @@ export const ArticlesList = () => {
       })
       .catch((error) => {
         setIsInvalid(true);
+        setIsLoading(false);
         setError(error.response);
       });
   }, [currentPage, sortByQuery, orderByQuery, topicFilter]);
@@ -60,7 +61,10 @@ export const ArticlesList = () => {
   return isInvalid ? (
     <h2>{`Error:${error.status} ${error.data.msg}`}</h2>
   ) : isLoading ? (
-    <h2>Loading Articles Please Wait...</h2>
+    <>
+      <h2>Loading Articles please wait...</h2>
+      <div className="loading"></div>
+    </>
   ) : (
     <main>
       <h2>Articles</h2>

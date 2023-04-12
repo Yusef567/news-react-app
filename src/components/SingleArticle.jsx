@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { getArticle, patchArticle } from "./api";
+import { useParams, Link } from "react-router-dom";
+import { getArticle, patchArticle } from "../api";
 import { Comments } from "./Comments";
 export const SingleArticle = () => {
   const [article, setArticle] = useState(null);
@@ -11,15 +11,19 @@ export const SingleArticle = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    getArticle(article_id).then((article) => {
-      setArticle(article);
-      setIsLoading(false);
-    });
+    getArticle(article_id)
+      .then((article) => {
+        setArticle(article);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError(err);
+        setIsLoading(false);
+      });
   }, [article_id]);
 
   const upVote = () => {
     setUserVote(1);
-
     setArticle((currentArticle) => {
       return { ...currentArticle, votes: currentArticle.votes + 1 };
     });
@@ -56,7 +60,25 @@ export const SingleArticle = () => {
     });
   };
   if (isLoading) {
-    return <h2>Loading Article Please Wait...</h2>;
+    return (
+      <>
+        <h2>Loading Article please wait...</h2>
+        <div className="loading"></div>
+      </>
+    );
+  } else if (error) {
+    return (
+      <main>
+        <h1>Error 404: Page Not Found</h1>
+        <h2>
+          Unfortunately this article does not exist, return back to Articles
+          page
+        </h2>
+        <Link className="articles-return-link" to={`/`}>
+          Articles
+        </Link>
+      </main>
+    );
   } else {
     return (
       <main>

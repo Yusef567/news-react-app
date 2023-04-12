@@ -1,21 +1,34 @@
 import { useState, useEffect, useContext } from "react";
-import { getUsers } from "./api";
-import { UserContext } from "./contexts/user";
-
+import { getUsers } from "../api";
+import { UserContext } from "../contexts/user";
 export const UsersList = () => {
   const { setUser } = useContext(UserContext);
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     setIsLoading(true);
-    getUsers().then((usersResponse) => {
-      setUsers(usersResponse);
-      setIsLoading(false);
-    });
+    getUsers()
+      .then((usersResponse) => {
+        setUsers(usersResponse);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setError(err.response);
+      });
   }, []);
 
   if (isLoading) {
-    return <h2>Loading users...</h2>;
+    return (
+      <>
+        <h2>Loading Users please wait...</h2>
+        <div className="loading"></div>
+      </>
+    );
+  } else if (error) {
+    return <h2>{`Error:${error.status} ${error.data.msg} jjh`}</h2>;
   } else {
     return (
       <main>
