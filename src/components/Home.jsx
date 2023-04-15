@@ -23,7 +23,7 @@ export const Home = () => {
   if (isLoading) {
     return (
       <>
-        <h2>Loading Home page please Wait....</h2>
+        <h2>Loading Home page please wait....</h2>
         <div className="loading"></div>
       </>
     );
